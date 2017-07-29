@@ -82,8 +82,8 @@ def main():
 			lcd_string("Change(%){:>7.2f}".format(float(change_percent)), LCD_LINE_2)
 
 			time.sleep(5)
-		except:
-			syslog.syslog("Failed to update price")
+		except Exception as err:
+			syslog.syslog("Failed to update price: ", err)
 			pass
 
 	
