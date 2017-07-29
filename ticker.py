@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
 
+# Adapted from http://www.raspberrypi-spy.co.uk/2012/07/16x2-lcd-module-control-using-python/
+# GPIO to LCD mapping changed to work with raspberry pi 3 (note the pins used are different to that described
+# in the above URL)
+
 # The wiring for the LCD is as follows:
 # 1 : GND
 # 2 : 5V
@@ -18,21 +22,12 @@
 # 15: LCD Backlight +5V**
 # 16: LCD Backlight GND
 
-#import
 import RPi.GPIO as GPIO
 import time
 import requests
 import syslog
 
 # Define GPIO to LCD mapping
-#LCD_RS = 7
-#LCD_E	= 8
-#LCD_D4 = 25
-#LCD_D5 = 24
-#LCD_D6 = 23
-#LCD_D7 = 18
-
-
 LCD_RS = 21
 LCD_E	= 20
 LCD_D4 = 16
@@ -155,9 +150,6 @@ def lcd_toggle_enable():
 
 def lcd_string(message,line):
 	# Send string to display
-
-
-
 
 	message = message.ljust(LCD_WIDTH," ")
 
