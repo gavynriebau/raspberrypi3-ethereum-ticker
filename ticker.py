@@ -64,6 +64,8 @@ def main():
 
 	# Initialise display
 	lcd_init()
+	lcd_string("Starting...", LCD_LINE_1)
+	time.sleep(2)
 
 	while True:
 
@@ -80,12 +82,12 @@ def main():
 			# Send some test
 			lcd_string("Ether($){:>8.2f}".format(float(current_price)), LCD_LINE_1)
 			lcd_string("Change(%){:>7.2f}".format(float(change_percent)), LCD_LINE_2)
-
-			time.sleep(5)
 		except Exception as err:
-			syslog.syslog("Failed to update price: ", err)
+			lcd_string("Network fail", LCD_LINE_1)
+			syslog.syslog("Failed to update price: {0}".format(err))
 			pass
 
+		time.sleep(5)
 	
 
 def lcd_init():
