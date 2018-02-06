@@ -26,6 +26,7 @@ import RPi.GPIO as GPIO
 import time
 import requests
 import syslog
+import re
 
 # Define GPIO to LCD mapping
 LCD_RS = 21
@@ -70,11 +71,13 @@ def main():
 	while True:
 
 		try:
-			# Get the latest ethereum price
-			r = requests.get("https://ethereumprice.org/wp-content/themes/theme/inc/exchanges/price-data.php?coin=eth&cur=ethusd&ex=waex&dec=2&start_time=24%20Hour")
-			json = r.json()
-			current_price  = json["current_price"]
-			change_percent = json["percent_change"]
+			r = requests.get("https://ethereumprice.org/")
+
+			m = re.search(r'<span id="ep-price">(.*?)</span>', r.text)
+			current_price  = m.groups()[0]
+
+			m = re.search(r'<span id="ep-percent-change">(.*?)</span>', r.text)
+			change_percent = m.groups()[0]
 		
 			print("Price: {}".format(current_price))
 			print("Change: {}".format(change_percent))
